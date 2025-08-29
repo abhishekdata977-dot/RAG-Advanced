@@ -1164,7 +1164,9 @@ User Query:
 
 Answer:
 """
-    model = genai.GenerativeModel('gemini-2.5-flash-lite')
+    #model = genai.GenerativeModel('gemini-2.5-flash-lite')
+    model = genai.GenerativeModel('gemini-2.5-flash')
+    #    gemini-2.5-flash
     response = model.generate_content(prompt)
     if response and response.text:
         return response.text.strip()
