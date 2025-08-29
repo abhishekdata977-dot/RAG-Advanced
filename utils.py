@@ -47,7 +47,7 @@ stop_audio_flag = False
 # Directory paths for data storage
 EMBEDDINGS_DIR = "embeddings"
 DATA_DIR = "data"
-
+modelName = "gemini-2.5-flash-lite"
 # Load environment variables from .env file for security
 load_dotenv()
 
@@ -1164,9 +1164,8 @@ User Query:
 
 Answer:
 """
-    model = genai.GenerativeModel('gemini-2.5-flash-lite')
-    #model = genai.GenerativeModel('gemini-2.5-flash')
-    #    gemini-2.5-flash
+    #model = genai.GenerativeModel('gemini-2.0-flash-exp')
+    model = genai.GenerativeModel(modelName)
     response = model.generate_content(prompt)
     if response and response.text:
         return response.text.strip()
@@ -1213,7 +1212,7 @@ def refine_answer_with_gemini(answer: str) -> str:
     **Human-Friendly Response:**
     """
     try:
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        model = genai.GenerativeModel(modelName)
         response = model.generate_content(refinement_prompt)
         if response and response.text:
             return response.text.strip()
@@ -1909,7 +1908,7 @@ def rewrite_query(user_query: str) -> str:
         "Focus on clarifying intent, adding relevant keywords, and expanding acronyms if obvious. "
         "Return only the rewritten query.\n\nUser Query: " + user_query
     )
-    model = genai.GenerativeModel('gemini-2.0-flash-exp')
+    model = genai.GenerativeModel(modelName)
     response = model.generate_content(prompt)
     if response and response.text:
         return response.text.strip()
@@ -1928,7 +1927,7 @@ def compress_context(context_text: str, query: str, token_threshold: int = 50000
         "This compressed context will be used for final answer generation.\n\n"
         f"User Query: {query}\n\nDocument Context:\n{context_text}"
     )
-    model = genai.GenerativeModel('gemini-2.0-flash-exp')
+    model = genai.GenerativeModel(modelName)
     response = model.generate_content(prompt)
     if response and response.text:
         return response.text.strip()
@@ -1948,6 +1947,4 @@ def play_audio(file_path: str):
     try:
         playsound(file_path)
     except Exception as e:
-
         logging.error(f"Error playing audio file {file_path}: {e}")
-
